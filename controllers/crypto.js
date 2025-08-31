@@ -22,7 +22,7 @@ exports.encryptFile = async (req, res) => {
     res.json({
       success: true,
       message: "File encrypted successfully.",
-      downloadUrl: `https://${req.get(
+      downloadUrl: `${req.protocol}://${req.get(
         "host"
       )}/api/downloadEncryptedFile/${fileName}`,
     });
@@ -73,9 +73,10 @@ exports.decryptFile = async (req, res) => {
     const fileName = path.basename(outputPath);
     console.log("File decrypted successfully:", fileName);
 
+    // When generating download URL
     res.json({
       success: true,
-      message: "File decrypted successfully.",
+      message: "File encrypted successfully.",
       downloadUrl: `${req.protocol}://${req.get(
         "host"
       )}/api/downloadDecryptedFile/${fileName}`,
