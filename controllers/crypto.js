@@ -22,7 +22,9 @@ exports.encryptFile = async (req, res) => {
     res.json({
       success: true,
       message: "File encrypted successfully.",
-      downloadUrl: `/api/downloadEncryptedFile/${fileName}`,
+      downloadUrl: `${req.protocol}://${req.get(
+        "host"
+      )}/api/downloadEncryptedFile/${fileName}`,
     });
   } catch (err) {
     console.error("File encryption error:", err);
