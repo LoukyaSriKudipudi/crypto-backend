@@ -4,6 +4,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const cryptoRoutes = require("./routes/cryptoRoutes");
 const cors = require("cors");
+app.set("trust proxy", true);
 
 app.use(cors());
 app.use("/api", cryptoRoutes);
