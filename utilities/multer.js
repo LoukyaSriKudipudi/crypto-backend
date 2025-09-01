@@ -3,7 +3,8 @@ const path = require("path");
 const fs = require("fs");
 
 const uploadDir = path.join(__dirname, "..", "original-files");
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -13,25 +14,27 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  const allowed = [
-    "image/png",
-    "image/jpeg",
-    "application/pdf",
-    "text/plain",
-    "application/zip",
-    "video/mp4",
-  ];
+// Allowed MIME types
+const allowedMimes = [
+  "image/png",
+  "image/jpeg",
+  "application/pdf",
+  "text/plain",
+  "application/zip",
+  "video/mp4",
+];
 
-  if (allowed.includes(file.mimetype)) {
+// Limits: 50MB
+const limits = { fileSize: 50 * 1024 * 1024 };
+
+const fileFilter = (req, file, cb) => {
+  if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error("invalid file type!"), false);
+    cb(new Error("Invalid file type"), false);
   }
 };
 
-const limits = { fileSize: 50 * 1024 * 1024 };
-
-const upload = multer({ storage, fileFilter, limits });
+const upload = multer({ storage, limits, fileFilter });
 
 module.exports = upload;

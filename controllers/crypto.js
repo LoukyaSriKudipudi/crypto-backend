@@ -6,6 +6,17 @@ const fs = require("fs/promises");
 // ------------------- File Encryption -------------------
 exports.encryptFile = async (req, res) => {
   try {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No file uploaded" });
+    }
+    if (!req.body.encryptionKey) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No encryption key provided" });
+    }
+
     const outputPath = path.join(
       __dirname,
       "..",
@@ -62,6 +73,17 @@ exports.sendEncryptedFile = (req, res) => {
 // ------------------- File Decryption -------------------
 exports.decryptFile = async (req, res) => {
   try {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No file uploaded" });
+    }
+    if (!req.body.decryptionKey) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No decryption key provided" });
+    }
+
     const outputPath = path.join(
       __dirname,
       "..",
@@ -117,6 +139,17 @@ exports.sendDecryptedFile = (req, res) => {
 // ------------------- Text Encryption -------------------
 exports.encryptText = async (req, res) => {
   try {
+    if (!req.body.text) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No text entered" });
+    }
+    if (!req.body.encryptionKey) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No encryption key provided" });
+    }
+
     const encryptedText = await encryptText(
       req.body.text,
       req.body.encryptionKey
@@ -139,6 +172,17 @@ exports.encryptText = async (req, res) => {
 // ------------------- Text Decryption -------------------
 exports.decryptText = async (req, res) => {
   try {
+    if (!req.body.text) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No text entered" });
+    }
+    if (!req.body.decryptionKey) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No decryption key provided" });
+    }
+
     const decryptedText = await decryptText(
       req.body.text,
       req.body.decryptionKey
