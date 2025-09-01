@@ -43,18 +43,20 @@ exports.sendEncryptedFile = (req, res) => {
     "encrypted-files",
     req.params.filename
   );
-  res.download(filepath, async (err) => {
-    if (err) {
-      console.error("Error sending encrypted file:", err);
-    } else {
-      try {
-        await fs.unlink(filepath);
-        console.log("Encrypted file deleted:", filepath);
-      } catch (unlinkErr) {
-        console.error("Error deleting encrypted file:", unlinkErr);
-      }
-    }
-  });
+  res.download(filepath);
+
+  // , async (err) => {
+  //   if (err) {
+  //     console.error("Error sending encrypted file:", err);
+  //   } else {
+  //     try {
+  //       await fs.unlink(filepath);
+  //       console.log("Encrypted file deleted:", filepath);
+  //     } catch (unlinkErr) {
+  //       console.error("Error deleting encrypted file:", unlinkErr);
+  //     }
+  //   }
+  // }
 };
 
 // ------------------- File Decryption -------------------
@@ -96,18 +98,20 @@ exports.sendDecryptedFile = (req, res) => {
     "decrypted-files",
     req.params.filename
   );
-  res.download(filepath, async (err) => {
-    if (err) {
-      console.error("Error sending decrypted file:", err);
-    } else {
-      try {
-        await fs.unlink(filepath);
-        console.log("Decrypted file deleted:", filepath);
-      } catch (unlinkErr) {
-        console.error("Error deleting decrypted file:", unlinkErr);
-      }
-    }
-  });
+  res.download(filepath);
+
+  // , async (err) => {
+  //   if (err) {
+  //     console.error("Error sending decrypted file:", err);
+  //   } else {
+  //     try {
+  //       await fs.unlink(filepath);
+  //       console.log("Decrypted file deleted:", filepath);
+  //     } catch (unlinkErr) {
+  //       console.error("Error deleting decrypted file:", unlinkErr);
+  //     }
+  //   }
+  // }
 };
 
 // ------------------- Text Encryption -------------------
